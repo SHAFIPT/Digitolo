@@ -5,7 +5,6 @@ import { resetUser } from "@/store/slice/userSlice";
 
   // Get the API URL from environment
 const API_URL = process.env.NEXT_PUBLIC_API_URL;
-console.log('this is th urell',API_URL); 
 
 if (!API_URL) {
   throw new Error("Environment variable NEXT_PUBLIC_API_URL is not defined");

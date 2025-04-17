@@ -6,6 +6,10 @@ const Controls: React.FC = () => {
   const { stats, updateStats, loading } = usePet();
   const [actionInProgress, setActionInProgress] = useState<string | null>(null);
 
+   if (typeof window === 'undefined') {
+    return null; // or a loading state
+  }
+
   // Helper function to handle API calls with loading state
   const handleAction = async (action: string, statsUpdate: any) => {
     if (loading || actionInProgress) return;

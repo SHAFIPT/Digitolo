@@ -15,7 +15,9 @@ import EvolutionCelebration from './EvolutionCelebration';
 
 const PetDisplay: React.FC = () => {
   const { stats, evolutionStage, loading, error, petName, hasEvolvedRecently } = usePet();
-
+  if (typeof window === 'undefined') {
+    return <div className="pet-display-card">Loading...</div>;
+  }
   // Get the appropriate animation based on pet's stats and evolution stage
   const getPetAnimation = () => {
     if (evolutionStage === 3) {  // Changed from 2 to 3 to match our evolution stages

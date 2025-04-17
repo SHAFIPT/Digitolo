@@ -17,10 +17,10 @@ const EvolutionCelebration: React.FC<EvolutionCelebrationProps> = ({ evolutionSt
 
   // Play a sound effect when the component mounts
   useEffect(() => {
-    // You can add a sound effect here if needed
-    // const audio = new Audio('/sounds/evolution.mp3');
-    // audio.play().catch(e => console.error("Audio play failed: ", e));
-  }, []);
+  if (typeof window !== 'undefined') {
+    // Audio or other browser API code here
+  }
+}, []);
 
   return (
     <div className="evolution-overlay">

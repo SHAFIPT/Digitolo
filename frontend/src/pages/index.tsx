@@ -11,7 +11,6 @@ import { persistor, RootState } from '@/store/store';
 
 export default function Home() {
   const user = useSelector((state: RootState) => state.user.user)
-  console.log('thsi si the suer ::',user)
   const { logout } = useAuth()
   const router = useRouter();
   const [username, setUsername] = useState('');
