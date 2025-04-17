@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@netlify/plugin-nextjs": "^5.10.6",
     "@reduxjs/toolkit": "^2.6.1",
     "axios": "^1.8.4",
     "firebase": "^11.6.0",
@@ -30,8 +31,8 @@
     "@types/react": "^18",
     "@types/react-dom": "^18",
     "@types/react-lottie": "^1.2.10",
-    "postcss": "^8.4.31",
     "autoprefixer": "^10.4.16",
+    "postcss": "^8.4.31",
     "typescript": "^5"
   }
 }
