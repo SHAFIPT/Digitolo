@@ -14,10 +14,15 @@ export default function Login() {
   const dispatch = useDispatch();
   const isUserAuthenticated = useSelector((state: RootState) => state.user.isUserAuthenticated);
   
+  const [isClient, setIsClient] = useState(false);
+  
   useEffect(() => {
-    const token = localStorage.getItem('accessToken');
-    if (isUserAuthenticated && token) {
-      router.replace('/'); // redirect to home or dashboard
+    setIsClient(true);
+    if (typeof window !== 'undefined') {
+      const token = localStorage.getItem('accessToken');
+      if (isUserAuthenticated && token) {
+        router.replace('/'); // redirect to home or dashboard
+      }
     }
   }, [isUserAuthenticated, router]);
   
@@ -46,7 +51,7 @@ export default function Login() {
       const response = await loginUser(email, password);
       const { accessToken, user } = response.data;
 
-      if (accessToken) {
+      if (accessToken && typeof window !== 'undefined') {
         localStorage.setItem('accessToken', accessToken);
       }
 

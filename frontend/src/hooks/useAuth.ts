@@ -1,8 +1,8 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import toast from 'react-hot-toast';
 import { registerUser, sendRegistrationOTP, verifyRegistrationOTP, userLogout } from '@/service/auth';
 import { useDispatch } from 'react-redux';
-import { setIsUserAuthenticated ,setUser } from '@/store/slice/userSlice';
+import { setIsUserAuthenticated, setUser } from '@/store/slice/userSlice';
 
 type User = {
   _id: string;
@@ -18,7 +18,13 @@ export const useAuth = () => {
   const [user, setUsers] = useState<User | null>(null);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
+  const [isBrowser, setIsBrowser] = useState(false);
+  
+  // Set isBrowser to true when component mounts on client
+  useEffect(() => {
+    setIsBrowser(true);
+  }, []);
 
   const sendOTP = async (email: string) => {
     setIsLoading(true);
@@ -49,19 +55,14 @@ export const useAuth = () => {
     }
   };
 
-  const register = async (
-  email: string,
-  password: string,
-  name: string
-) => {
-  setIsLoading(true);
-  setError(null);
-  try {
-    const response = await registerUser(email, password, name);
-    if (response.status === 201) {
-      console.log('This is the response get in frontend ::', response)
-      // const {user} = response.data.data
-      const userDoc = response.data.data.user._doc;
+  const register = async (email: string, password: string, name: string) => {
+    setIsLoading(true);
+    setError(null);
+    try {
+      const response = await registerUser(email, password, name);
+      if (response.status === 201) {
+        console.log('This is the response get in frontend ::', response);
+        const userDoc = response.data.data.user._doc;
         const user = {
           _id: userDoc._id,
           name: userDoc.name,
@@ -72,31 +73,36 @@ export const useAuth = () => {
           updatedAt: userDoc.updatedAt,
         };
         setUsers(user);
-        dispatch(setUser(user))
-      dispatch(setIsUserAuthenticated(true));
+        dispatch(setUser(user));
+        dispatch(setIsUserAuthenticated(true));
 
-      if (response.data.data?.accessToken) {
-        localStorage.setItem('accessToken', response.data.data.accessToken);
+        if (response.data.data?.accessToken && isBrowser) {
+          localStorage.setItem('accessToken', response.data.data.accessToken);
+        }
       }
-    }
 
-    return response.data;
-  } catch (err: any) {
-    setError(err?.response?.data?.message || 'Registration failed');
-    throw err;
-  } finally {
-    setIsLoading(false);
-  }
-};
+      return response.data;
+    } catch (err: any) {
+      setError(err?.response?.data?.message || 'Registration failed');
+      throw err;
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
   const logout = async () => {
     try {
-       const response = await userLogout();
+      const response = await userLogout();
       setUsers(null); // clear user on logout
-      toast.success('Logged out successfully');
+      if (isBrowser) {
+        toast.success('Logged out successfully');
+      }
       return response;
     } catch (error) {
-      toast.error('Logout failed');
+      if (isBrowser) {
+        toast.error('Logout failed');
+      }
+      throw error;
     }
   };
 
@@ -104,10 +110,11 @@ export const useAuth = () => {
     sendOTP,
     verifyOTP,
     register,
-    logout,       // ✅ add this
-    user,         // ✅ add this
+    logout,
+    user,
     isLoading,
     error,
     setError,
+    isBrowser,
   };
 };

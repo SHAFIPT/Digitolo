@@ -18,13 +18,16 @@ export default function Home() {
   const dispatch = useDispatch()
 
   useEffect(() => {
-    const token = localStorage.getItem('accessToken');
-    if (!token) {
-      router.push('/login');
-    } else {
-      setUsername(user?.name);
+    // Only access localStorage on the client side
+    if (typeof window !== 'undefined') {
+      const token = localStorage.getItem('accessToken');
+      if (!token) {
+        router.push('/login');
+      } else {
+        setUsername(user?.name);
+      }
     }
-  }, [router]);
+  }, [router, user]);
 
   const handleLogout = async () => {
   try {

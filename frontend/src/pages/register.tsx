@@ -26,12 +26,16 @@ import { RootState } from '@/store/store';
     const [petName, setPetName] = useState('');
     const [showPassword, setShowPassword] = useState(false); // State for password visibility
     const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+    const [isClient, setIsClient] = useState(false);
 
     const isUserAuthenticated = useSelector((state: RootState) => state.user.isUserAuthenticated);
     useEffect(() => {
-    const token = localStorage.getItem('accessToken');
-    if (isUserAuthenticated && token) {
-      router.replace('/'); // redirect to home or dashboard
+    setIsClient(true);
+    if (typeof window !== 'undefined') {
+      const token = localStorage.getItem('accessToken');
+      if (isUserAuthenticated && token) {
+        router.replace('/');
+      }
     }
   }, [isUserAuthenticated, router]);
     
