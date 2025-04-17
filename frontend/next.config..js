@@ -1,12 +1,7 @@
-/** @type {import('next').NextConfig} */
 const nextConfig = {
   reactStrictMode: true,
   swcMinify: true,
-  // Use client-side rendering for pages that need browser APIs
-  experimental: {
-    // Optional: if needed
-    // appDir: false,
-  }
+  env: {
+    NEXT_PUBLIC_API_URL: process.env.NEXT_PUBLIC_API_URL,
+  },
 }
-
-module.exports = nextConfig
