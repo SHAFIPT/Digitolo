@@ -4,7 +4,7 @@ import { inject, injectable } from "tsyringe";
 import { AuthenticatedRequest } from '../middleware/authentication';
 import { STATUS_CODE } from '../enums/statusCodes';
 import { MESSAGES } from '../constants/messages';
-import { use } from 'react';
+
 @injectable()
 export class petController {
     constructor(
