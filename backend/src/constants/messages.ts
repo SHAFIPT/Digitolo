@@ -1,0 +1,26 @@
+export const MESSAGES = {
+  PET_ALREADY_EXISTS: "You already have a pet.",
+  PET_CREATION_FAILED: "Failed to create new pet.",
+  ERROR_EXISTING_USER: "Error checking existing user pet.",
+  PET_CREATED_SUCCESS: "Pet created successfully.",
+  PET_FETCHED_SUCCESS: "Pet fetched successfully",
+  PET_FETCH_FAILED: "Pet fetched faild..",
+  PET_NOT_FOUND: "Pet not found!",
+  PET_STATS_UPDATED: "Pet status updated..",
+  PET_HISTORY_FETCHED: "Pet History fetched",
+  
+
+  USER_REGISTERED: "User registered successfully",
+  LOGIN_SUCCESFUL: "Login successfull",
+  LOGIN_FAILD : "Login faild",
+  EMAIL_PASSWORD_REQUIRED :"Email and passwod requeried",
+  USER_LOGIN_SUCCESSFULY : "User logined",
+  OTP_SENT: "OTP has been sent",
+  OTP_VERIFIED: "OTP verified successfully",
+  OTP_RESENT: "OTP resent successfully",
+  USER_DETAILS_NOT_FOUND : "User Detatils Not found",
+  INVALID_OTP: "Invalid or expired OTP",
+  INVALID_CREDENTIALS: "Invalid email or password",
+  LOGOUT_SUCCESS: "Logout successful",
+  TOKEN_CREATED_SUCCESSFULLY : "Token created successfully",
+};
