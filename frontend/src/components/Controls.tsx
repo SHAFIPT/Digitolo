@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { usePet } from "../features/pet/PetContext";
-import '../styles/Controls.css';
+// import '../styles/Controls.css';
 
 const Controls: React.FC = () => {
   const { stats, updateStats, loading } = usePet();

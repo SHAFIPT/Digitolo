@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-import '../styles/auth.css';
+// import '../styles/auth.css';
 import { useDispatch, useSelector } from 'react-redux';
 import { setUser, setIsUserAuthenticated } from '@/store/slice/userSlice';
 import toast from 'react-hot-toast';

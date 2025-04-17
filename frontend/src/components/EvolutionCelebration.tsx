@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import '../styles/EvolutionCelebration.css';
+// import '../styles/EvolutionCelebration.css';
 
 interface EvolutionCelebrationProps {
   evolutionStage: number;

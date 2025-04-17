@@ -3,7 +3,7 @@ import { useRouter } from 'next/router';
 import PetDisplay from "../components/PetDisplay";
 import Controls from "../components/Controls";
 import { PetProvider } from "../features/pet/PetContext";
-import '../styles/Home.css';
+// import '../styles/Home.css';
 import { useAuth } from '@/hooks/useAuth';
 import { useDispatch, useSelector } from 'react-redux';
 import { resetUser } from '@/store/slice/userSlice';

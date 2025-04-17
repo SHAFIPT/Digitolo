@@ -1,8 +1,8 @@
   import { useEffect, useState } from 'react';
   import Link from 'next/link';
   import { useRouter } from 'next/router';
-  import '../styles/auth.css';
-  import '../styles/loading.css';
+  // import '../styles/auth.css';
+  // import '../styles/loading.css';
   import { useAuth } from '@/hooks/useAuth';
   import toast from 'react-hot-toast';
   import { createPet } from '@/service/petService';

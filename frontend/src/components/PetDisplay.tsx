@@ -11,7 +11,7 @@ import catFinalHappy from "../assets/animations/catFinalHappy.json";
 import catFinalHungry from "../assets/animations/catFinalHungry.json";
 import catFinalSleepy from "../assets/animations/catFinalSleepy.json";
 import EvolutionCelebration from './EvolutionCelebration';
-import '../styles/PetDisplay.css';
+// import '../styles/PetDisplay.css';
 
 const PetDisplay: React.FC = () => {
   const { stats, evolutionStage, loading, error, petName, hasEvolvedRecently } = usePet();
