@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { usePet } from "../features/pet/PetContext";
 import '../styles/Controls.css';
+
 type PetStats = {
   hunger: number;
   happiness: number;
@@ -12,19 +13,16 @@ const Controls: React.FC = () => {
   const { stats, updateStats, loading } = usePet();
   const [actionInProgress, setActionInProgress] = useState<string | null>(null);
 
-  // Helper function to handle API calls with loading state
   const handleAction = async (action: string, statsUpdate: Partial<PetStats>) => {
     if (loading || actionInProgress) return;
-    
+
     try {
       setActionInProgress(action);
-      await updateStats(statsUpdate);
+      await updateStats(statsUpdate, true); // Optimistic update
     } catch (error) {
       console.error(`Failed to ${action} pet:`, error);
     } finally {
-      setTimeout(() => {
-        setActionInProgress(null);
-      }, 1000); // Keep action indicator for a moment after completion
+      setTimeout(() => setActionInProgress(null), 800);
     }
   };
 
@@ -57,7 +55,6 @@ const Controls: React.FC = () => {
     });
   };
 
-  // Button should be disabled if the action would be ineffective or harmful
   const isFeedingNeeded = stats.hunger < 95;
   const isPlayingPossible = stats.energy > 15;
   const isRestNeeded = stats.energy < 95;
@@ -66,56 +63,40 @@ const Controls: React.FC = () => {
 
   return (
     <div className="controls-grid">
-      <button 
-        onClick={feedPet} 
-        disabled={!isFeedingNeeded || globalDisabled}
-        className={`action-button feed-button ${actionInProgress === 'feed' ? 'action-in-progress' : ''} ${(!isFeedingNeeded || globalDisabled) ? 'action-disabled' : ''}`}
-      >
+      <button onClick={feedPet} disabled={!isFeedingNeeded || globalDisabled}
+        className={`action-button feed-button ${actionInProgress === 'feed' ? 'action-in-progress' : ''}`}>
         <div className="action-icon">🍗</div>
         <div className="action-info">
           <span className="action-name">Feed</span>
           <span className="action-effect">+25% Hunger, +5% Happiness</span>
         </div>
-        {actionInProgress === 'feed' && <div className="action-loader"></div>}
       </button>
-      
-      <button 
-        onClick={playWithPet} 
-        disabled={!isPlayingPossible || globalDisabled}
-        className={`action-button play-button ${actionInProgress === 'play' ? 'action-in-progress' : ''} ${(!isPlayingPossible || globalDisabled) ? 'action-disabled' : ''}`}
-      >
+
+      <button onClick={playWithPet} disabled={!isPlayingPossible || globalDisabled}
+        className={`action-button play-button ${actionInProgress === 'play' ? 'action-in-progress' : ''}`}>
         <div className="action-icon">🎾</div>
         <div className="action-info">
           <span className="action-name">Play</span>
           <span className="action-effect">+25% Happiness, -15% Energy</span>
         </div>
-        {actionInProgress === 'play' && <div className="action-loader"></div>}
       </button>
-      
-      <button 
-        onClick={restPet} 
-        disabled={!isRestNeeded || globalDisabled}
-        className={`action-button rest-button ${actionInProgress === 'rest' ? 'action-in-progress' : ''} ${(!isRestNeeded || globalDisabled) ? 'action-disabled' : ''}`}
-      >
+
+      <button onClick={restPet} disabled={!isRestNeeded || globalDisabled}
+        className={`action-button rest-button ${actionInProgress === 'rest' ? 'action-in-progress' : ''}`}>
         <div className="action-icon">💤</div>
         <div className="action-info">
           <span className="action-name">Rest</span>
           <span className="action-effect">+25% Energy, -5% Happiness</span>
         </div>
-        {actionInProgress === 'rest' && <div className="action-loader"></div>}
       </button>
-      
-      <button 
-        onClick={boostExperience}
-        disabled={globalDisabled}
-        className={`action-button train-button ${actionInProgress === 'train' ? 'action-in-progress' : ''} ${globalDisabled ? 'action-disabled' : ''}`}
-      >
-        <div className="action-icon">⭐</div>
+
+      <button onClick={boostExperience} disabled={globalDisabled}
+        className={`action-button train-button ${actionInProgress === 'train' ? 'action-in-progress' : ''}`}>
+        <div className="action-icon">📚</div>
         <div className="action-info">
           <span className="action-name">Train</span>
-          <span className="action-effect">+25% Experience</span>
+          <span className="action-effect">+25% XP</span>
         </div>
-        {actionInProgress === 'train' && <div className="action-loader"></div>}
       </button>
     </div>
   );
