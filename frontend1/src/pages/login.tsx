@@ -110,9 +110,6 @@ export default function Login() {
             <div className="form-group">
               <div className="password-header">
                 <label htmlFor="password">Password</label>
-                <Link to='/forgot-password' className="forgot-password">
-                  Forgot Password?
-                </Link>
               </div>
               <div className="input-wrapper">
                 <span className="input-icon">🔒</span>

@@ -58,6 +58,21 @@
         toast.error('Passwords do not match');
         return;
       }
+
+       // Run Joi validation BEFORE sending OTP
+        const validationErrors = ValidateRegister({
+          name: formData.name,
+          email: formData.email,
+          password: formData.password,
+        });
+
+        if (validationErrors) {
+          setFieldErrors(validationErrors);
+          toast.error('Please fix the highlighted fields');
+          return;
+        }
+
+
       try {
         await sendOTP(formData.email);
         toast.success('OTP sent successfully!');
@@ -88,11 +103,11 @@
     }
 
      const validationErrors = ValidateRegister({
+        name: formData.name,
         email: formData.email,
         password: formData.password,
-        name: formData.name,
-      });
-
+     });
+      
       if (validationErrors) {
         setFieldErrors(validationErrors);
         setIsLoading(false);
@@ -102,6 +117,7 @@
     try {
       // Step 1: Register the user
       const registerResponse = await register(formData.email, formData.password, formData.name);
+      console.log('Tthe is hte registerResponse ;::',registerResponse)
       toast.success('Registration complete!');
 
       const userId = registerResponse.data.user._doc._id;  // ✅ extract user ID
@@ -114,8 +130,6 @@
 
       // Call the createPet function
       const data = await createPet(petData);
-      console.log('This is the data get in createPet ::', data);
-
       if (data) {
         toast.success('Pet created successfully!');
         await navigate('/');

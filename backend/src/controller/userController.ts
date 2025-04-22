@@ -135,9 +135,6 @@ export class userController {
     next: NextFunction
     ): Promise<void> {
         const { user } = req;
-        
-        console.log('Ths sithe user refreshdtoken user..........',user)
-
     try {
         const accessToken = await this.userService.refreshAccessToken(user.rawToken);
 
@@ -153,24 +150,21 @@ export class userController {
     }
 
     public async logout(
-  req: AuthenticatedRequest,
-  res: Response, 
-  next: NextFunction
-): Promise<void> {
-  try {
-      const { user } = req;
-      
-      console.log('Thnsi isth the user for logut ::',user)
+    req: AuthenticatedRequest,
+    res: Response, 
+    next: NextFunction
+    ): Promise<void> {
+    try {
+        const { user } = req;
+        const logoutData = await this.userService.logout(user.rawToken, user.id);
 
-    const logoutData = await this.userService.logout(user.rawToken, user.id);
-
-    if (logoutData) {
-      res.status(STATUS_CODE.OK)
-        .clearCookie("refreshToken")
-        .json({message : MESSAGES.USER_LOGIN_SUCCESSFULY});
+        if (logoutData) {
+        res.status(STATUS_CODE.OK)
+            .clearCookie("refreshToken")
+            .json({message : MESSAGES.USER_LOGIN_SUCCESSFULY});
+        }
+    } catch (error) {
+        next(error);
     }
-  } catch (error) {
-    next(error);
-  }
-}
+    }
 }
